@@ -1,3 +1,37 @@
+/* --- FIX: Prevent overflow and improve box/text wrapping on small screens --- */
+html, body {
+  max-width: 100vw;
+  overflow-x: auto;
+}
+
+.container, .main-content, .details-section, .bbox-section, .calculo-section, .validacion-section, .stat-card, .viz-card {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.results-table, .coords-grid, .bbox-grid, .viz-grid {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  .results-table, .coords-grid, .bbox-grid, .viz-grid {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+  }
+  .stat-value, .bbox-value {
+    font-size: 1.1rem !important;
+    word-break: break-all;
+  }
+  .stat-card h3, .bbox-label {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+}
 /* --- RESPONSIVE DESIGN IMPROVEMENTS --- */
 @media (max-width: 1200px) {
   .container {
