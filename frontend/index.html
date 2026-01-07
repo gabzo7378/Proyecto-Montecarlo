@@ -1,133 +1,237 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculador de Área - Monte Carlo</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Calculador de Área con Método de Monte Carlo</h1>
-        <p class="subtitle">Estimación de áreas territoriales de Sudamérica</p>
-      </header>
 
-      <div class="main-content">
-        <div class="input-section">
-          <div class="input-row">
-            <div class="form-group">
-              <label for="pais-select">Seleccione el país:</label>
-              <select id="pais-select" class="form-control">
-                <option value="">Cargando países...</option>
-              </select>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculador de Área - Monte Carlo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-            <div class="form-group">
-              <label for="n-puntos">Cantidad de puntos:</label>
-              <input
-                type="number"
-                id="n-puntos"
-                class="form-control"
-                value="100000"
-                min="100"
-                max="10000000"
-              />
-            </div>
+<body>
+  <div class="container">
+    <header>
+      <h1>Calculador de Área con Método de Monte Carlo</h1>
+      <p class="subtitle">Estimación de áreas territoriales de Sudamérica</p>
+    </header>
 
-            <div class="form-group btn-group">
-              <label>&nbsp;</label>
-              <button id="simular-btn" class="btn-primary">Calcular Área</button>
-            </div>
-          </div>
-          
-          <small class="help-text-bottom">
-            Recomendado: 10,000 (rápido) | 100,000 (preciso) | 1,000,000 (alta
-            precisión)
-          </small>
-        </div>
-
-        <div id="loading" class="loading hidden">
-          <div class="spinner"></div>
-          <p>Ejecutando simulación de Monte Carlo...</p>
-        </div>
-
-        <div id="resultados" class="resultados hidden">
-          <h2>Resultados de la Simulación</h2>
-
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h3>País Analizado</h3>
-              <p id="pais-nombre" class="stat-value">-</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>Área Real</h3>
-              <p id="area-real" class="stat-value">-</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>Área Estimada</h3>
-              <p id="area-estimada" class="stat-value">-</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>Error Relativo</h3>
-              <p id="error-relativo" class="stat-value">-</p>
-            </div>
+    <div class="main-content">
+      <div class="input-section">
+        <div class="input-row">
+          <div class="form-group">
+            <label for="pais-select">Seleccione el país:</label>
+            <select id="pais-select" class="form-control">
+              <option value="">Cargando países...</option>
+            </select>
           </div>
 
+          <div class="form-group">
+            <label for="n-puntos">Cantidad de puntos:</label>
+            <input type="number" id="n-puntos" class="form-control" value="100000" min="100" max="10000000" />
+          </div>
+
+          <div class="form-group btn-group">
+            <label>&nbsp;</label>
+            <button id="simular-btn" class="btn-primary">Calcular Área</button>
+          </div>
+        </div>
+
+        <small class="help-text-bottom">
+          Recomendado: 10,000 (rápido) | 100,000 (preciso) | 1,000,000 (alta
+          precisión)
+        </small>
+      </div>
+
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Ejecutando simulación de Monte Carlo...</p>
+      </div>
+
+      <div id="resultados" class="resultados hidden">
+        <h2>Resultados de la Simulación</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>País Analizado</h3>
+            <p id="pais-nombre" class="stat-value">-</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>Área Real</h3>
+            <p id="area-real" class="stat-value">-</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>Área Estimada</h3>
+            <p id="area-estimada" class="stat-value">-</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>Error Relativo</h3>
+            <p id="error-relativo" class="stat-value">-</p>
+            <p id="evaluacion-badge" class="evaluacion-badge">-</p>
+          </div>
+        </div>
+
+        <!-- Sección de Coordenadas -->
+        <div class="coords-grid">
           <div class="details-section">
-            <h3>Estadísticas de la Simulación</h3>
+            <h3>📍 Coordenadas Geográficas (WGS84 - Grados)</h3>
             <table class="results-table">
               <tr>
-                <td>Total de puntos generados:</td>
-                <td id="total-puntos">-</td>
+                <td>Latitud mínima:</td>
+                <td id="lat-min">-</td>
               </tr>
               <tr>
-                <td>Puntos dentro del país:</td>
-                <td id="puntos-dentro">-</td>
+                <td>Latitud máxima:</td>
+                <td id="lat-max">-</td>
               </tr>
               <tr>
-                <td>Puntos fuera del país:</td>
-                <td id="puntos-fuera">-</td>
+                <td>Longitud mínima:</td>
+                <td id="lon-min">-</td>
               </tr>
               <tr>
-                <td>Tiempo de simulación:</td>
-                <td id="tiempo-sim">-</td>
-              </tr>
-              <tr>
-                <td>Proporción (dentro/total):</td>
-                <td id="proporcion">-</td>
+                <td>Longitud máxima:</td>
+                <td id="lon-max">-</td>
               </tr>
             </table>
           </div>
 
-                <div class="visualization-section">
-                    <h3>Visualizaciones</h3>
-                    <div class="viz-grid">
-                        <div class="viz-card">
-                            <h4>Vista Geográfica (Lat/Long)</h4>
-                            <img id="visualizacion-previa" src="" alt="Vista Geográfica">
-                        </div>
-                        <div class="viz-card">
-                            <h4>Simulación Monte Carlo</h4>
-                            <img id="visualizacion-simulacion" src="" alt="Simulación Monte Carlo">
-                        </div>
-                    </div>
-                </div>
+          <div class="details-section">
+            <h3>📐 Coordenadas Proyectadas (Metros)</h3>
+            <table class="results-table">
+              <tr>
+                <td>Eje X mínimo:</td>
+                <td id="x-min">-</td>
+              </tr>
+              <tr>
+                <td>Eje X máximo:</td>
+                <td id="x-max">-</td>
+              </tr>
+              <tr>
+                <td>Eje Y mínimo:</td>
+                <td id="y-min">-</td>
+              </tr>
+              <tr>
+                <td>Eje Y máximo:</td>
+                <td id="y-max">-</td>
+              </tr>
+            </table>
+            <p id="proyeccion-info" class="proyeccion-info">-</p>
+          </div>
+        </div>
+
+        <!-- Sección de Bounding Box -->
+        <div class="details-section bbox-section">
+          <h3>📦 Bounding Box (Caja Contenedora)</h3>
+          <div class="bbox-grid">
+            <div class="bbox-item">
+              <span class="bbox-label">Ancho</span>
+              <span id="bbox-ancho" class="bbox-value">-</span>
             </div>
+            <div class="bbox-item">
+              <span class="bbox-label">Alto</span>
+              <span id="bbox-alto" class="bbox-value">-</span>
+            </div>
+            <div class="bbox-item">
+              <span class="bbox-label">Área del BBox</span>
+              <span id="bbox-area" class="bbox-value">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estadísticas de Simulación -->
+        <div class="details-section">
+          <h3>🎲 Estadísticas de la Simulación</h3>
+          <table class="results-table">
+            <tr>
+              <td>Total de puntos generados:</td>
+              <td id="total-puntos">-</td>
+            </tr>
+            <tr>
+              <td>Puntos dentro del país:</td>
+              <td id="puntos-dentro">-</td>
+            </tr>
+            <tr>
+              <td>Puntos fuera del país:</td>
+              <td id="puntos-fuera">-</td>
+            </tr>
+            <tr>
+              <td>Tiempo de simulación:</td>
+              <td id="tiempo-sim">-</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Cálculo del Área -->
+        <div class="details-section calculo-section">
+          <h3>🧮 Cálculo del Área</h3>
+          <table class="results-table">
+            <tr>
+              <td>Área del Bounding Box:</td>
+              <td id="area-bbox">-</td>
+            </tr>
+            <tr>
+              <td>Proporción (dentro/total):</td>
+              <td id="proporcion">-</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>ÁREA ESTIMADA (Monte Carlo):</strong></td>
+              <td id="area-estimada-calc"><strong>-</strong></td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Validación -->
+        <div class="details-section validacion-section">
+          <h3>✅ Validación</h3>
+          <table class="results-table">
+            <tr>
+              <td>Área Real (dato oficial):</td>
+              <td id="area-real-val">-</td>
+            </tr>
+            <tr>
+              <td>Área Calculada (simulada):</td>
+              <td id="area-calc-val">-</td>
+            </tr>
+            <tr>
+              <td>Diferencia (Error Absoluto):</td>
+              <td id="error-absoluto">-</td>
+            </tr>
+            <tr>
+              <td>Error Relativo:</td>
+              <td id="error-relativo-val">-</td>
+            </tr>
+          </table>
+          <p id="mensaje-precision" class="mensaje-precision">-</p>
+        </div>
+
+        <!-- Visualizaciones -->
+        <div class="visualization-section">
+          <h3>Visualizaciones</h3>
+          <div class="viz-grid">
+            <div class="viz-card">
+              <h4>Vista Geográfica (Lat/Long)</h4>
+              <img id="visualizacion-previa" src="" alt="Vista Geográfica">
+            </div>
+            <div class="viz-card">
+              <h4>Simulación Monte Carlo</h4>
+              <img id="visualizacion-simulacion" src="" alt="Simulación Monte Carlo">
+            </div>
+          </div>
         </div>
       </div>
-
-      <footer>
-        <p>
-          Universidad Nacional de San Antonio Abad del Cusco - Modelado y
-          Simulación 2025-2
-        </p>
-      </footer>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+    <footer>
+      <p>
+        Universidad Nacional de San Antonio Abad del Cusco - Modelado y
+        Simulación 2025-2
+      </p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>

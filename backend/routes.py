@@ -93,12 +93,43 @@ def simular(request: SimulacionRequest):
         area_real
     )
     
+    # Evaluar precisión
+    if error_relativo < 1:
+        evaluacion = "excelente"
+        mensaje_precision = "Excelente precisión (Error < 1%)"
+    elif error_relativo < 5:
+        evaluacion = "buena"
+        mensaje_precision = "Buena precisión (Error < 5%)"
+    elif error_relativo < 10:
+        evaluacion = "aceptable"
+        mensaje_precision = "Precisión aceptable (Error < 10%)"
+    else:
+        evaluacion = "baja"
+        mensaje_precision = f"El ShapeFile de {request.pais} puede no considerar islas o archipiélagos"
+    
+    # Extraer bbox info
+    bbox = resultados['bbox']
+    min_x, min_y, max_x, max_y = bbox
+    ancho_m = max_x - min_x
+    alto_m = max_y - min_y
+    
     return {
         "pais": request.pais,
         "area_real_km2": area_real,
         "coordenadas_geograficas": geo_info['coords_geo'],
         "coordenadas_proyectadas": geo_info['coords_proyectadas'],
         "proyeccion": geo_info['proyeccion'],
+        "bounding_box": {
+            "min_x": round(min_x, 2),
+            "max_x": round(max_x, 2),
+            "min_y": round(min_y, 2),
+            "max_y": round(max_y, 2),
+            "ancho_m": round(ancho_m, 2),
+            "alto_m": round(alto_m, 2),
+            "ancho_km": round(ancho_m / 1000, 2),
+            "alto_km": round(alto_m / 1000, 2),
+            "area_km2": round(resultados['area_bbox_m2'] / 1_000_000, 2)
+        },
         "simulacion": {
             "n_puntos": resultados['n_puntos'],
             "puntos_dentro": resultados['puntos_dentro'],
@@ -112,7 +143,9 @@ def simular(request: SimulacionRequest):
             "area_real_km2": area_real,
             "area_estimada_km2": round(area_estimada, 2),
             "error_absoluto_km2": round(error_absoluto, 2),
-            "error_relativo_porcentaje": round(error_relativo, 4)
+            "error_relativo_porcentaje": round(error_relativo, 4),
+            "evaluacion": evaluacion,
+            "mensaje_precision": mensaje_precision
         },
         "visualizacion_previa": imagen_previa,
         "visualizacion_simulacion": imagen_simulacion
