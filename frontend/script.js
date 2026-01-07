@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "https://montecarlo-backend-production.up.railway.app";
 
 // Cargar países al inicio
 document.addEventListener("DOMContentLoaded", async () => {
