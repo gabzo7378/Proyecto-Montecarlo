@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+geopandas
+fiona
+shapely
+numpy
+matplotlib
+pydantic

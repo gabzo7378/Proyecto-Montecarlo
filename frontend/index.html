@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculador de Área - Monte Carlo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Calculador de Área con Método de Monte Carlo</h1>
+        <p class="subtitle">Estimación de áreas territoriales de Sudamérica</p>
+      </header>
+
+      <div class="main-content">
+        <div class="input-section">
+          <div class="input-row">
+            <div class="form-group">
+              <label for="pais-select">Seleccione el país:</label>
+              <select id="pais-select" class="form-control">
+                <option value="">Cargando países...</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="n-puntos">Cantidad de puntos:</label>
+              <input
+                type="number"
+                id="n-puntos"
+                class="form-control"
+                value="100000"
+                min="100"
+                max="10000000"
+              />
+            </div>
+
+            <div class="form-group btn-group">
+              <label>&nbsp;</label>
+              <button id="simular-btn" class="btn-primary">Calcular Área</button>
+            </div>
+          </div>
+          
+          <small class="help-text-bottom">
+            Recomendado: 10,000 (rápido) | 100,000 (preciso) | 1,000,000 (alta
+            precisión)
+          </small>
+        </div>
+
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <p>Ejecutando simulación de Monte Carlo...</p>
+        </div>
+
+        <div id="resultados" class="resultados hidden">
+          <h2>Resultados de la Simulación</h2>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>País Analizado</h3>
+              <p id="pais-nombre" class="stat-value">-</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>Área Real</h3>
+              <p id="area-real" class="stat-value">-</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>Área Estimada</h3>
+              <p id="area-estimada" class="stat-value">-</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>Error Relativo</h3>
+              <p id="error-relativo" class="stat-value">-</p>
+            </div>
+          </div>
+
+          <div class="details-section">
+            <h3>Estadísticas de la Simulación</h3>
+            <table class="results-table">
+              <tr>
+                <td>Total de puntos generados:</td>
+                <td id="total-puntos">-</td>
+              </tr>
+              <tr>
+                <td>Puntos dentro del país:</td>
+                <td id="puntos-dentro">-</td>
+              </tr>
+              <tr>
+                <td>Puntos fuera del país:</td>
+                <td id="puntos-fuera">-</td>
+              </tr>
+              <tr>
+                <td>Tiempo de simulación:</td>
+                <td id="tiempo-sim">-</td>
+              </tr>
+              <tr>
+                <td>Proporción (dentro/total):</td>
+                <td id="proporcion">-</td>
+              </tr>
+            </table>
+          </div>
+
+                <div class="visualization-section">
+                    <h3>Visualizaciones</h3>
+                    <div class="viz-grid">
+                        <div class="viz-card">
+                            <h4>Vista Geográfica (Lat/Long)</h4>
+                            <img id="visualizacion-previa" src="" alt="Vista Geográfica">
+                        </div>
+                        <div class="viz-card">
+                            <h4>Simulación Monte Carlo</h4>
+                            <img id="visualizacion-simulacion" src="" alt="Simulación Monte Carlo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Universidad Nacional de San Antonio Abad del Cusco - Modelado y
+          Simulación 2025-2
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
