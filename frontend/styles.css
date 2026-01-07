@@ -1,3 +1,79 @@
+/* --- RESPONSIVE DESIGN IMPROVEMENTS --- */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 98vw;
+    min-width: 0;
+  }
+  .main-content {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .input-section {
+    padding: 20px;
+  }
+  .details-section, .bbox-section, .calculo-section, .validacion-section {
+    padding: 15px;
+    margin-bottom: 18px;
+  }
+  .stat-card {
+    padding: 18px;
+  }
+  .viz-card img {
+    height: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100vh;
+    padding: 0;
+  }
+  header {
+    padding: 25px 10px;
+  }
+  .main-content {
+    padding: 5px;
+  }
+  .input-section {
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .details-section, .bbox-section, .calculo-section, .validacion-section {
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .stat-card {
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .viz-card {
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .viz-card img {
+    height: 180px;
+  }
+  .help-text-bottom {
+    font-size: 0.8rem;
+  }
+  .form-control {
+    font-size: 0.95rem;
+    padding: 8px 10px;
+  }
+  .btn-primary {
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
+  .results-table td {
+    font-size: 0.95rem;
+    padding: 7px 0;
+  }
+}
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 * {
